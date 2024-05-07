@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -34,7 +33,7 @@ class _FirstPageState extends State<FirstPage> {
                   Align(
                       alignment: const AlignmentDirectional(3, -0.3),
                       child: Container(
-                        // height: 300,
+                        // height: 300,+-
                         // width: 300,
                         height: mq.size.width*0.8,
                         width: mq.size.width*0.8,

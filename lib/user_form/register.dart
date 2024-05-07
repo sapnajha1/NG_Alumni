@@ -40,6 +40,13 @@ class RegisterForm with ChangeNotifier{
     notifyListeners();
   }
 
+  // void addInList(String fullNameController,String getImage ){
+  //   userProfiles.add(fullNameController as UserProfile);
+  //       userProfiles.add(getImage as UserProfile);
+  //       notifyListeners();
+  //
+  // }
+
 
 
 
@@ -60,7 +67,7 @@ class RegisterForm with ChangeNotifier{
           break;
           case 3: Navigator.push(context, MaterialPageRoute(builder: (context)=> FamilyHomePage()));
           break;
-          case 4: Navigator.push(context, MaterialPageRoute(builder: (context)=> AlumniPage(fullnameController: '', UserAboutController: '', profileImage: getImage,)));
+          case 4: Navigator.push(context, MaterialPageRoute(builder: (context)=> AlumniPage(fullnameController: '', UserAboutController: '', getImage: getImage,)));
           break;
           default:
 
@@ -100,10 +107,6 @@ class RegisterForm with ChangeNotifier{
     );
   }
 
-
-
-
-
   Widget alumniPage(fullnameController,SelectedStatusController, List<UserProfile> userProfiles ) {
     return GridView.builder(
       scrollDirection: Axis.vertical,
@@ -113,11 +116,11 @@ class RegisterForm with ChangeNotifier{
         mainAxisSpacing: 5.0,
 
       ),
-      itemCount: userProfiles.length,
-      // itemCount: 10,
+      // itemCount: userProfiles.length,
+      itemCount: 10,
       itemBuilder: (context, index) {
 
-        UserProfile userProfile =userProfiles[index];
+        // UserProfile userProfile =userProfiles[index];
         return Padding(
           padding: EdgeInsets.all(5.0),
           child: ClipRRect(
@@ -133,10 +136,10 @@ class RegisterForm with ChangeNotifier{
                     child: Center(
                       child: CircleAvatar(
                         radius: 50,
-                        backgroundImage: userProfile.avatarImage != null
-                            ? FileImage(userProfile.avatarImage!)as ImageProvider<Object>
-                            : AssetImage('assets1/studentsColor.png'),
-                        // backgroundImage: getImage != null ? FileImage(getImage!) as ImageProvider<Object>: AssetImage('assets1/studentsColor.png'),
+                        // backgroundImage: userProfile.getImage != null
+                        //     ? FileImage(userProfile.getImage!)as ImageProvider<Object>
+                        //     : AssetImage('assets1/studentsColor.png'),
+                        backgroundImage: getImage != null ? FileImage(getImage!) as ImageProvider<Object>: AssetImage('assets1/studentsColor.png'),
                         // backgroundImage: AssetImage('assets1/studentsColor.png'), // Use appropriate image asset
 
                       ),
@@ -154,8 +157,8 @@ class RegisterForm with ChangeNotifier{
                         children: [
                           Center(
                             child: Text(
-                              userProfile.fullName,
-                              // fullnameController.text,
+                              // userProfile.fullName,
+                              fullnameController.text,
                               style: GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
                           ),

@@ -61,6 +61,9 @@ class _FivethPageState extends State<FivethPage> {
       setState(() {
         getImage = tempimage;
       });
+      print(photo.path);
+      print(tempimage.path);
+      print(getImage);
     }catch(ex){
       developer.log(ex.toString());
     }
@@ -88,7 +91,6 @@ class _FivethPageState extends State<FivethPage> {
               ),
             )
         ),
-
       Align(
         alignment: const AlignmentDirectional(-3, -0.3),
         child: Container(
@@ -132,17 +134,23 @@ class _FivethPageState extends State<FivethPage> {
               Center(child: Text("choose your profile photo",style: GoogleFonts.pacifico(fontSize: mq.size.width * 0.05,color: Color(0xFF673AB7)),)),
               SizedBox(height: mq.size.height * 0.05),
 
-              Center(
-                      child: InkWell(
-                          onTap: (){ShowAlertBox();
-                            print(getImage);},
-                                  child: getImage!=null? CircleAvatar(
+              Consumer<RegisterForm>(builder : (context, value, child) {
+                return
+                  Center(
+                    child: InkWell(
+                        onTap: () {
+                          ShowAlertBox();
+                          // value.addInList(getImage as String, fullNameController as String );
+                        },
+                        child: getImage != null ? CircleAvatar(
                           radius: 60,
                           backgroundImage: FileImage(getImage!),
-                                  ): CircleAvatar(radius: 60,
-                                  child: Icon(Icons.person,size: 80,),)
-                      ),
+                        ) : CircleAvatar(radius: 60,
+                          child: Icon(Icons.person, size: 80,),)
                     ),
+                  );
+
+              }),
 
 
               SizedBox(height: mq.size.height * 0.08),

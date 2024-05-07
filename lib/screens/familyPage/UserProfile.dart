@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class UserProfile {
   final String fullName;
-  final File? avatarImage;
+  final File? getImage;
 
-  UserProfile({required this.fullName, this.avatarImage});
+  UserProfile({required this.fullName, this.getImage});
 }

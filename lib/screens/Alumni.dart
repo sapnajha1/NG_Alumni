@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import '../user_form/register.dart';
 
 class AlumniPage extends StatefulWidget {
-  AlumniPage({super.key, required this.fullnameController, required this.UserAboutController,required this.profileImage});
+  AlumniPage({super.key, required this.fullnameController, required this.UserAboutController,required this.getImage});
 
   final String fullnameController;
   final String UserAboutController;
-  final File? profileImage;
+  final File? getImage;
   // final List<UserProfile> userProfiles;
 
 
@@ -60,7 +60,6 @@ class _AlumniPageState extends State<AlumniPage> {
                    ),
                  )
              ),
-
           Align(
             alignment: const AlignmentDirectional(-3, -0.3),
             child: Container(
@@ -89,6 +88,7 @@ class _AlumniPageState extends State<AlumniPage> {
               decoration:  BoxDecoration(color: Colors.transparent),
             ),
           ),
+
          Consumer<RegisterForm>(builder: (context, registerForm, _){
            return registerForm.alumniPage(registerForm.fullNameController,registerForm.SelectedOption,registerForm.userProfilesList );
              }),
