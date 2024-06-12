@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140210503368",
+    "project_id": "alumning-5bea2",
+    "storage_bucket": "alumning-5bea2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140210503368:android:d0af81d1bfcbb12a8b2ffd",
+        "android_client_info": {
+          "package_name": "com.example.ng_alumni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnEmw6jUWa-66A1dCALEbmu4GO0nfLvSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
