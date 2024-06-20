@@ -1,7 +1,11 @@
+import 'dart:developer';
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ng_alumni/screens/userDetails/registerPage.dart';
+import 'package:ng_alumni/screens/userDetails/secondPage.dart';
 import 'package:ng_alumni/user_form/register.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +19,18 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   final TextEditingController fullnameController = TextEditingController();
+
+  addData(String name) async {
+    if (name==""){
+      log('Enter required field');
+
+    }else{
+      FirebaseFirestore.instance.collection("user_Details").doc(name).set({
+        'Full Name' : name,
+
+      }).then((value) => log("Data Saved"));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +128,33 @@ class _FirstPageState extends State<FirstPage> {
 
                                         SizedBox(height: mq.size.height * 0.01),
 
-                                        value.uiWidget(value.fullNameController),
+                                        value.uiWidget(value.fullNameController, hintText: 'Enter your Full Name '),
+
 
 
                                         // SizedBox(height: 20,),
                                         SizedBox(height: mq.size.height * 0.05),
+                                        // Center(
+                                        //   child: ElevatedButton(
+                                        //     onPressed: () {
+                                        //
+                                        //       Navigator.push(context, MaterialPageRoute(builder: (context) => SecondPage()));
+                                        //       // if (fullnameController.text.isNotEmpty) {
+                                        //       //   widget.pageController.nextPage(
+                                        //       //     // duration: Duration(milliseconds: 300),
+                                        //       //     curve: Curves.easeIn,
+                                        //       //   );
+                                        //       // } else {
+                                        //       //   ScaffoldMessenger.of(context).showSnackBar(
+                                        //       //     SnackBar(
+                                        //       //       content: Text('Please enter your full name'),
+                                        //       //     ),
+                                        //       //   );
+                                        //       // }
+                                        //     },
+                                        //     child: Text("Next"),
+                                        //   ),
+                                        // ),
 
                                         Center(
 

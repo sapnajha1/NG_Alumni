@@ -1,7 +1,8 @@
 // import 'dart:js';
 import 'dart:io';
 
-
+// import 'user_profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ng_alumni/screens/Alumni.dart';
 import 'package:ng_alumni/screens/familyPage/familyHomePage.dart';
@@ -9,15 +10,18 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
+import '../authentication/userDetailsListModel.dart';
 import '../screens/familyPage/UserProfile.dart';
 
 class RegisterForm with ChangeNotifier{
 
   final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController SelectedStatusController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
+  final TextEditingController statusController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  // final TextEditingController SelectedStatusController = TextEditingController();
 
   List<UserProfile> userProfiles = [];
   List<UserProfile> get userProfilesList => userProfiles;
@@ -30,6 +34,42 @@ class RegisterForm with ChangeNotifier{
 
   String SelectedOption = '';
 
+  // Add method to fetch user profiles from Firebase
+  Future<void> fetchUserProfiles() async {
+    try {
+      final QuerySnapshot result = await FirebaseFirestore.instance.collection('users').get();
+      final List<UserProfile> loadedProfiles = result.docs.map((doc) {
+        return UserProfile(
+
+          email: doc['Email'],
+          imageUrl: doc['photo_url'],
+          gender: doc['Gender'],
+          status: doc['Status'],
+          fullname: doc['Name'],
+          phoneNumber: doc['Phone'],
+        );
+      }).toList();
+
+      userProfiles = loadedProfiles;
+      notifyListeners();
+    } catch (e) {
+      print('Error fetching user profiles: $e');
+    }
+  }
+
+  // void addUserProfile() {
+  //   final newUserProfile = UserProfile(
+  //     fullName: fullNameController.text,
+  //     email: emailController.text,
+  //     gender: genderController.text,
+  //     status: statusController.text,
+  //     phone: phoneController.text,
+  //     // profilePictureUrl: profilePicture?.path ?? '', // Assuming you handle profile picture upload elsewhere
+  //   );
+  //   userProfiles.add(newUserProfile);
+  //   notifyListeners();
+  // }
+
   void setIndex(int index){
     _selectedIndex = index;
     notifyListeners();
@@ -40,12 +80,8 @@ class RegisterForm with ChangeNotifier{
     notifyListeners();
   }
 
-  // void addInList(String fullNameController,String getImage ){
-  //   userProfiles.add(fullNameController as UserProfile);
-  //       userProfiles.add(getImage as UserProfile);
-  //       notifyListeners();
-  //
-  // }
+
+
 
 
 
@@ -67,7 +103,7 @@ class RegisterForm with ChangeNotifier{
           break;
           case 3: Navigator.push(context, MaterialPageRoute(builder: (context)=> FamilyHomePage()));
           break;
-          case 4: Navigator.push(context, MaterialPageRoute(builder: (context)=> AlumniPage(fullnameController: '', UserAboutController: '', getImage: getImage,)));
+          case 4: Navigator.push(context, MaterialPageRoute(builder: (context)=> AlumniPage()));
           break;
           default:
 
@@ -107,7 +143,7 @@ class RegisterForm with ChangeNotifier{
     );
   }
 
-  Widget alumniPage(fullnameController,SelectedStatusController, List<UserProfile> userProfiles ) {
+  Widget alumniPage( List<UserProfile> userProfiles ) {
     return GridView.builder(
       scrollDirection: Axis.vertical,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -117,7 +153,7 @@ class RegisterForm with ChangeNotifier{
 
       ),
       // itemCount: userProfiles.length,
-      itemCount: 10,
+      itemCount: userProfiles.length,
       itemBuilder: (context, index) {
 
         // UserProfile userProfile =userProfiles[index];
@@ -136,11 +172,14 @@ class RegisterForm with ChangeNotifier{
                     child: Center(
                       child: CircleAvatar(
                         radius: 50,
-                        // backgroundImage: userProfile.getImage != null
-                        //     ? FileImage(userProfile.getImage!)as ImageProvider<Object>
-                        //     : AssetImage('assets1/studentsColor.png'),
-                        backgroundImage: getImage != null ? FileImage(getImage!) as ImageProvider<Object>: AssetImage('assets1/studentsColor.png'),
-                        // backgroundImage: AssetImage('assets1/studentsColor.png'), // Use appropriate image asset
+                        backgroundImage: userProfiles[index].imageUrl !=null ?
+                          NetworkImage(userProfiles[index].imageUrl!) as ImageProvider<Object>:
+                          AssetImage('assets1/studentsColor.png'),
+                        // // backgroundImage: userProfile.getImage != null
+                        // //     ? FileImage(userProfile.getImage!)as ImageProvider<Object>
+                        // //     : AssetImage('assets1/studentsColor.png'),
+                        // backgroundImage: getImage != null ? FileImage(getImage!) as ImageProvider<Object>: AssetImage('assets1/studentsColor.png'),
+                        // // backgroundImage: AssetImage('assets1/studentsColor.png'), // Use appropriate image asset
 
                       ),
                     ),
@@ -157,16 +196,16 @@ class RegisterForm with ChangeNotifier{
                         children: [
                           Center(
                             child: Text(
-                              // userProfile.fullName,
-                              fullnameController.text,
+                              userProfiles[index].fullname,
+                              // fullnameController.text,
                               style: GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
                           ),
                           // SizedBox(height: 0),
                           Center(
                             child: Text(
-                              // 'UserAboutController.text',
-                              SelectedOption,
+                              userProfiles[index].status,
+                              // SelectedOption,
                               style: GoogleFonts.poppins(fontSize: 10.0,color: Colors.deepPurple),
                             ),
                           ),
@@ -334,29 +373,34 @@ class RegisterForm with ChangeNotifier{
   }
 
 
-  TextField uiWidget(TextEditingController controller1, {String text1='sapna jha', IconData icondata1 = Icons.person}) {
-    notifyListeners();
-    return TextField(
-      controller: controller1,
-      style: TextStyle(color: Colors.black26),
-      decoration: InputDecoration(
-        // hintText: "Email Id",
-        hintStyle: TextStyle(fontSize: 20, color: Colors.black26),
-        // prefixIcon: Icon(Icons.person, color: Colors.black26),
-    border: OutlineInputBorder( // Default border (when not focused)
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: Colors.blueGrey,
-              width: 3.0, // Specify default thickness here
+  SizedBox uiWidget(TextEditingController controller1 ,{double? width, double? height,String text1='sapna jha', IconData icondata1 = Icons.person, required String hintText}) {
+    // notifyListeners();
+    return SizedBox(
+      height: height,
+      width: width,
+      child: TextField(
+        controller: controller1,
+        style: TextStyle(color: Colors.black26, fontSize: 20),
+        decoration: InputDecoration(
+          hintText: hintText,
+
+          hintStyle: TextStyle(fontSize: 20, color: Colors.black26),
+          // prefixIcon: Icon(Icons.person, color: Colors.black26),
+      border: OutlineInputBorder( // Default border (when not focused)
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(
+                color: Colors.black,
+                width: 3.0, // Specify default thickness here
+              ),
             ),
-          ),
-          focusedBorder: OutlineInputBorder( // Border when focused
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: Color(0xFF673AB7), // Change color if desired
-              width: 3.0, // Specify focused thickness here
+            focusedBorder: OutlineInputBorder( // Border when focused
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(
+                color: Color(0xFF673AB7), // Change color if desired
+                width: 2.0, // Specify focused thickness here
+              ),
             ),
-          ),
+        ),
       ),
     );
 
@@ -381,9 +425,10 @@ class RegisterForm with ChangeNotifier{
 
   void clearControllers() {
     fullNameController.clear();
-    lastNameController.clear();
+    genderController.clear();
     emailController.clear();
-    phoneNumberController.clear();
+    phoneController.clear();
+    statusController.clear();
     notifyListeners();
   }
 }

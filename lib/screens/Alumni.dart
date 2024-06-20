@@ -1,22 +1,20 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../authentication/userDetailsListModel.dart';
 import '../user_form/register.dart';
 
 class AlumniPage extends StatefulWidget {
-  AlumniPage({super.key, required this.fullnameController, required this.UserAboutController,required this.getImage});
+  AlumniPage({super.key});
 
-  final String fullnameController;
-  final String UserAboutController;
-  final File? getImage;
-  // final List<UserProfile> userProfiles;
-
-
-
+  // final String fullnameController;
+  // final String UserAboutController;
+  // final File? getImage;
 
 
   @override
@@ -24,16 +22,41 @@ class AlumniPage extends StatefulWidget {
 }
 
 class _AlumniPageState extends State<AlumniPage> {
+  List<UserProfile> userProfiles = [];
 
-
-
-  // class UserProfile{
-  //
-  // final String fullName;
-  // final File? avatarImage;
-  // UserProfile({required this.fullName, this.avatarImage});
-  //
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   fetchUserProfiles();
   // }
+
+  // Future<void> fetchUserProfiles() async {
+  //   try{
+  //     final QuerySnapshot result = await FirebaseFirestore.instance.collection('user').get();
+  //     final List<UserProfile> loadedProfiles = [];
+  //     result.docs.forEach((doc) {
+  //       loadedProfiles.add(UserProfile(
+  //           fullname: doc['Name'],
+  //           email: doc['Email'],
+  //           phoneNumber: doc['Phone'],
+  //           status: doc['Status'],
+  //           gender: doc['gender'], imageUrl: null
+  //       ));
+  //     });
+  //     setState(() {
+  //       userProfiles = loadedProfiles;
+  //     });
+  //   }catch(e) {
+  //     print('Error fetching user profiles: $e');
+  //   }
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<RegisterForm>(context, listen: false).fetchUserProfiles();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +113,7 @@ class _AlumniPageState extends State<AlumniPage> {
           ),
 
          Consumer<RegisterForm>(builder: (context, registerForm, _){
-           return registerForm.alumniPage(registerForm.fullNameController,registerForm.SelectedOption,registerForm.userProfilesList );
+           return registerForm.alumniPage(registerForm.userProfiles, );
              }),
 
 
@@ -98,8 +121,6 @@ class _AlumniPageState extends State<AlumniPage> {
            ],
          ),
        ),
-
-
 
 
       bottomNavigationBar: Consumer<RegisterForm>(

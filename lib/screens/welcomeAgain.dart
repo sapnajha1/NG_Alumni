@@ -80,16 +80,16 @@ class _WelcomeAgainState extends State<WelcomeAgain> {
                                   Center(child: Lottie.asset('assets1/hurray.json', height: mq.size.height * 0.3,
                                     width: mq.size.width * 0.5,)),
 
-                                  Center(child: Lottie.asset('assets1/purpleBird1.json',   height: mq.size.height * 0.1,
-                                    width: mq.size.width * 5.0,)),
+                                  Center(child: Lottie.asset('assets1/purpleBird1.json',   height: mq.size.height * 0.2,
+                                    width: mq.size.width * 6.0,)),
                                   // SizedBox(height: 0,),
 
                                   Center(child: Text("Hurray!",style: GoogleFonts.pacifico(fontSize: mq.size.width * 0.1,color: Color(0xFF673AB7)),)),
 
-                                  SizedBox(height: mq.size.height * 0.25),
+                                  SizedBox(height: mq.size.height * 0.10),
 
 
-                                  Center(child: Text("click on button to visit NGfamily",style:  GoogleFonts.poppins(fontSize: mq.size.width * 0.04,color: Color(0xFFFFAB40)))),
+                                  Center(child: Text("click on button to visit NGfamily",style:  GoogleFonts.poppins(fontSize: mq.size.width * 0.05,color: Color(0xFFFFAB40)))),
 
                                   Consumer<RegisterForm>(builder: (context, value, child){
                                     return

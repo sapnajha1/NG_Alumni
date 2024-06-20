@@ -4,22 +4,22 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ng_alumni/screens/userDetails/firstPage.dart';
 import 'package:ng_alumni/screens/userDetails/fivethPage.dart';
 import 'package:ng_alumni/screens/userDetails/registerPage.dart';
-import 'package:ng_alumni/screens/userDetails/secondPageInformation.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../home.dart';
-import '../user_form/register.dart';
+import '../../user_form/register.dart';
+// import '../home.dart';
+// import '../user_form/register.dart';
 import 'package:lottie/lottie.dart';
 
-class welcome extends StatefulWidget {
-  const welcome({super.key});
+class secondInformation extends StatefulWidget {
+  const secondInformation({super.key});
 
   @override
-  State<welcome> createState() => _welcomeState();
+  State<secondInformation> createState() => _secondInformationState();
 }
 
-class _welcomeState extends State<welcome> {
+class _secondInformationState extends State<secondInformation> {
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
@@ -77,70 +77,60 @@ class _welcomeState extends State<welcome> {
                 return Center(
                   child: Column(
                     children: [
-                      Lottie.asset('assets1/purplefriend.json'),
-                      Text(
-                        "Hello!",
-                        style: GoogleFonts.pacifico(
-                          fontSize: mq.size.width * 0.12,
-                          color: Color(0xFF673AB7),
+
+                      Center(child: Lottie.asset('assets1/purpleBird2.json',
+                        // height: 130, width: 130
+                        height: mq.size.height * 0.30,
+                        width: mq.size.height * 0.30,
+                      )),
+                      // SizedBox(height: 50,),
+
+                      // SizedBox(height: mq.size.height * 0.06),
+
+                      Container(
+                        width: mq.size.width * 0.5,
+                        height: mq.size.width * 0.09,
+                        child: Image.asset(
+                          'images/ng_logo.png',
+                          height: mq.size.width * 0.09,
+                          width: mq.size.width * 0.5,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      SizedBox(height:  mq.size.height * 0.1),
-                      Row(
-                        children: [
-                          Text(
-                            "Welcome in ",
-                            style: GoogleFonts.poppins(
-                              fontSize: mq.size.width * 0.06,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                          Container(
-                            width: mq.size.width * 0.3,
-                            height: mq.size.width * 0.08,
-                            child: Image.asset(
-                              'images/ng_logo.png',
-                              height: mq.size.width * 0.08,
-                              width: mq.size.width * 0.3,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Text(
-                            "Family",
-                            style: GoogleFonts.poppins(
-                              fontSize: mq.size.width * 0.06,
-                                fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ],
-                      ),
+
+
                       Text(
-                        "Connect with mentors, revisit memories, and discover the vibrant NavGurukul community",
+                        "Family wants to know ",
                         style: GoogleFonts.poppins(
-                          fontSize: mq.size.width * 0.04,
-                            fontWeight: FontWeight.w500
+                          fontSize: mq.size.width * 0.08,
                         ),
                       ),
-                      SizedBox(height: mq.size.height * 0.1),
-                      // Text(
-                      //   "Are You Ready to Get Together",
-                      //   style: GoogleFonts.oswald(
-                      //     fontSize: mq.size.width * 0.04,
-                      //     color: Color(0xFFFFAB40),
-                      //   ),
-                      // ),
-                      // SizedBox(height: 5),
+                      Text(
+                        "about you!",
+                        style: GoogleFonts.poppins(
+                          fontSize: mq.size.width * 0.08,
+                        ),
+                      ),
+                      SizedBox(height: mq.size.height * 0.2),
+                      Text(
+                        "Are You Ready to Get Together",
+                        style: GoogleFonts.oswald(
+                          fontSize: mq.size.width * 0.06,
+                          color: Color(0xFFFFAB40),
+                        ),
+                      ),
+                      SizedBox(height: 5),
                       value.uiButton(
                         context,
                             () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => secondInformation(),
+                              builder: (context) => FivethPage(),
                             ),
                           );
                         },
-                        buttonText: 'Start',
+                        buttonText: 'Click Here',
                         buttonHeight: mq.size.height * 0.2,
                         buttonWidth: mq.size.width * 0.1,
                         buttonColor: Color(0xFF673AB7),
