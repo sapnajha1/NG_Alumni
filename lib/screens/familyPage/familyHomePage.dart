@@ -11,7 +11,7 @@ class FamilyHomePage extends StatefulWidget {
 }
 
 class _FamilyHomePageState extends State<FamilyHomePage> {
-  int _currentIndex = 0;
+  final int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +23,24 @@ class _FamilyHomePageState extends State<FamilyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignme/t.spaceEvenly,
           children: [
-            Text("NGfamily",style: GoogleFonts.pacifico(color: Color(0xFF673AB7),fontWeight: FontWeight.bold),),
+            Text("NGfamily",style: GoogleFonts.pacifico(color: const Color(0xFF673AB7),fontWeight: FontWeight.bold),),
 
-            SizedBox(width: 160,),
+            const SizedBox(width: 160,),
 
             GestureDetector(
               onTap: () {
                 // Handle profile icon click
                 // Show profile settings, documents, etc.
               },
-              child: Icon(Icons.account_circle_outlined,),
+              child: const Icon(Icons.account_circle_outlined,),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             GestureDetector(
               onTap: () {
                 // Handle message icon click
                 // Navigate to messages screen
               },
-              child: Icon(Icons.message_outlined),
+              child: const Icon(Icons.message_outlined),
 
             ),
 
@@ -64,7 +64,7 @@ class _FamilyHomePageState extends State<FamilyHomePage> {
               return value.statusWidget();
             },
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           
           
           Expanded(

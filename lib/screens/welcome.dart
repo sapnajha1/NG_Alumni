@@ -1,14 +1,10 @@
 import 'dart:ui';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ng_alumni/screens/userDetails/firstPage.dart';
-import 'package:ng_alumni/screens/userDetails/fivethPage.dart';
-import 'package:ng_alumni/screens/userDetails/registerPage.dart';
 import 'package:ng_alumni/screens/userDetails/secondPageInformation.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../home.dart';
 import '../user_form/register.dart';
 import 'package:lottie/lottie.dart';
 
@@ -35,33 +31,33 @@ class _welcomeState extends State<welcome> {
         child: Stack(
           children: [
             Align(
-              alignment: AlignmentDirectional(0.9, -0.3),
+              alignment: const AlignmentDirectional(0.9, -0.3),
               child: Container(
                 height: mq.size.width * 0.6,
                 width: mq.size.width * 0.6,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.deepPurple,
                 ),
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(-0.9, -0.3),
+              alignment: const AlignmentDirectional(-0.9, -0.3),
               child: Container(
                 height: mq.size.width * 0.6,
                 width: mq.size.width * 0.6,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color(0xFF673AB7),
                 ),
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0, -1.2),
+              alignment: const AlignmentDirectional(0, -1.2),
               child: Container(
                 height: mq.size.width * 0.6,
                 width: mq.size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xFFFFAB40),
                 ),
               ),
@@ -69,7 +65,7 @@ class _welcomeState extends State<welcome> {
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
               child: Container(
-                decoration: BoxDecoration(color: Colors.transparent),
+                decoration: const BoxDecoration(color: Colors.transparent),
               ),
             ),
             Consumer<RegisterForm>(
@@ -82,7 +78,7 @@ class _welcomeState extends State<welcome> {
                         "Hello!",
                         style: GoogleFonts.pacifico(
                           fontSize: mq.size.width * 0.12,
-                          color: Color(0xFF673AB7),
+                          color: const Color(0xFF673AB7),
                         ),
                       ),
                       SizedBox(height:  mq.size.height * 0.1),
@@ -91,11 +87,11 @@ class _welcomeState extends State<welcome> {
                           Text(
                             "Welcome in ",
                             style: GoogleFonts.poppins(
-                              fontSize: mq.size.width * 0.06,
+                              fontSize: mq.size.width * 0.05,
                               fontWeight: FontWeight.w500
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: mq.size.width * 0.3,
                             height: mq.size.width * 0.08,
                             child: Image.asset(
@@ -108,7 +104,7 @@ class _welcomeState extends State<welcome> {
                           Text(
                             "Family",
                             style: GoogleFonts.poppins(
-                              fontSize: mq.size.width * 0.06,
+                              fontSize: mq.size.width * 0.05,
                                 fontWeight: FontWeight.w500
                             ),
                           ),
@@ -136,14 +132,14 @@ class _welcomeState extends State<welcome> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => secondInformation(),
+                              builder: (context) => const secondInformation(),
                             ),
                           );
                         },
                         buttonText: 'Start',
                         buttonHeight: mq.size.height * 0.2,
                         buttonWidth: mq.size.width * 0.1,
-                        buttonColor: Color(0xFF673AB7),
+                        buttonColor: const Color(0xFF673AB7),
                         textStyle: GoogleFonts.pacifico(
                           fontSize: mq.size.width * 0.06,
                           fontWeight: FontWeight.bold,

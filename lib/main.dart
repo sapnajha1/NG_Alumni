@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ng_alumni/screens/userDetails/fivethPage.dart';
 import 'package:ng_alumni/screens/welcome.dart';
 import 'package:ng_alumni/user_form/register.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'home.dart';
 
 void main() async{
   print('Starting the app...');
@@ -30,10 +28,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => RegisterForm())
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         home: welcome(),
+        // home: UserProfileDetails(passuserProfile: null)
         // home: FivethPage(),
       ),
     );

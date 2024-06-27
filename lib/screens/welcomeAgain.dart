@@ -59,7 +59,7 @@ class _WelcomeAgainState extends State<WelcomeAgain> {
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
               child: Container(
-                decoration:  BoxDecoration(color: Colors.transparent),
+                decoration:  const BoxDecoration(color: Colors.transparent),
               ),
             ),
 
@@ -67,9 +67,9 @@ class _WelcomeAgainState extends State<WelcomeAgain> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding:  EdgeInsets.all(40.0),
+                      padding:  const EdgeInsets.all(40.0),
                       child: Container(height: 800,
-                          padding:  EdgeInsets.all(10.0),
+                          padding:  const EdgeInsets.all(10.0),
                           child:
 
                               Column(mainAxisAlignment: MainAxisAlignment.center,
@@ -84,24 +84,24 @@ class _WelcomeAgainState extends State<WelcomeAgain> {
                                     width: mq.size.width * 6.0,)),
                                   // SizedBox(height: 0,),
 
-                                  Center(child: Text("Hurray!",style: GoogleFonts.pacifico(fontSize: mq.size.width * 0.1,color: Color(0xFF673AB7)),)),
+                                  Center(child: Text("Hurray!",style: GoogleFonts.pacifico(fontSize: mq.size.width * 0.1,color: const Color(0xFF673AB7)),)),
 
                                   SizedBox(height: mq.size.height * 0.10),
 
 
-                                  Center(child: Text("click on button to visit NGfamily",style:  GoogleFonts.poppins(fontSize: mq.size.width * 0.05,color: Color(0xFFFFAB40)))),
+                                  Center(child: Text("click on button to visit NGfamily",style:  GoogleFonts.poppins(fontSize: mq.size.width * 0.05,color: const Color(0xFFFFAB40)))),
 
                                   Consumer<RegisterForm>(builder: (context, value, child){
                                     return
                                       Center(
                                         child: value.uiButton(context, () {
                                           Navigator.push(context,
-                                              MaterialPageRoute(builder:(context) => FamilyHomePage()));
+                                              MaterialPageRoute(builder:(context) => const FamilyHomePage()));
                                         },
                                           buttonWidth: mq.size.width * 0.1,
                                           buttonHeight: mq.size.height * 0.2,
                                           buttonText: 'Home',
-                                          buttonColor: Color(0xFF673AB7),
+                                          buttonColor: const Color(0xFF673AB7),
                                           textStyle: GoogleFonts.pacifico(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
 
 

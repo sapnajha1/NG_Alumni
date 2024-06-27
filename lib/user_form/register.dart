@@ -6,12 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ng_alumni/screens/Alumni.dart';
 import 'package:ng_alumni/screens/familyPage/familyHomePage.dart';
-import 'package:provider/provider.dart';
+import 'package:ng_alumni/screens/userDetails/userProfileDetails.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 import '../authentication/userDetailsListModel.dart';
-import '../screens/familyPage/UserProfile.dart';
 
 class RegisterForm with ChangeNotifier{
 
@@ -28,25 +26,27 @@ class RegisterForm with ChangeNotifier{
 
 
 
+
   int _selectedIndex = 0;
   int get selectedIndex  => _selectedIndex;
   File? getImage;
 
   String SelectedOption = '';
 
-  // Add method to fetch user profiles from Firebase
+  //method to fetch user profiles from Firebase to UI
   Future<void> fetchUserProfiles() async {
     try {
+      // User? user = userCredential.user;
       final QuerySnapshot result = await FirebaseFirestore.instance.collection('users').get();
       final List<UserProfile> loadedProfiles = result.docs.map((doc) {
         return UserProfile(
 
-          email: doc['Email'],
-          imageUrl: doc['photo_url'],
-          gender: doc['Gender'],
-          status: doc['Status'],
-          fullname: doc['Name'],
-          phoneNumber: doc['Phone'],
+          email: doc['Email'] ?? '',
+          imageUrl: doc['photo_url'] ?? '',
+          gender: doc['Gender'] ?? 'Unknow',
+          status: doc['Status'] ?? '',
+          fullname: doc['Name'] ?? '',
+          phoneNumber: doc['Phone'] ?? '',
         );
       }).toList();
 
@@ -56,6 +56,7 @@ class RegisterForm with ChangeNotifier{
       print('Error fetching user profiles: $e');
     }
   }
+
 
   // void addUserProfile() {
   //   final newUserProfile = UserProfile(
@@ -95,36 +96,36 @@ class RegisterForm with ChangeNotifier{
       onTap: (index) {
         setIndex(index);
         switch (index){
-          case 0: Navigator.push(context, MaterialPageRoute(builder: (context)=> FamilyHomePage()));
+          case 0: Navigator.push(context, MaterialPageRoute(builder: (context)=> const FamilyHomePage()));
           break;
-          case 1: Navigator.push(context, MaterialPageRoute(builder: (context)=> FamilyHomePage()));
+          case 1: Navigator.push(context, MaterialPageRoute(builder: (context)=> const FamilyHomePage()));
           break;
-          case 2: Navigator.push(context, MaterialPageRoute(builder: (context)=> FamilyHomePage()));
+          case 2: Navigator.push(context, MaterialPageRoute(builder: (context)=> const FamilyHomePage()));
           break;
-          case 3: Navigator.push(context, MaterialPageRoute(builder: (context)=> FamilyHomePage()));
+          case 3: Navigator.push(context, MaterialPageRoute(builder: (context)=> const FamilyHomePage()));
           break;
-          case 4: Navigator.push(context, MaterialPageRoute(builder: (context)=> AlumniPage()));
+          case 4: Navigator.push(context, MaterialPageRoute(builder: (context)=> const AlumniPage()));
           break;
           default:
 
         }
       },
-      selectedIconTheme: IconThemeData(color: Colors.deepPurple), // Icon theme when selected
-      unselectedIconTheme: IconThemeData(color: Colors.black), // Icon theme when unselected
+      selectedIconTheme: const IconThemeData(color: Colors.deepPurple), // Icon theme when selected
+      unselectedIconTheme: const IconThemeData(color: Colors.black), // Icon theme when unselected
       selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold), // Selected label style with Poppins font
       unselectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.normal), // Unselected label style with Poppins font
       items: [
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined,),
             activeIcon: Icon(Icons.home), // Icon when selected
             label: 'Home'
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined,),
             activeIcon: Icon(Icons.search), // Icon when selected
             label: 'Search'
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(Icons.add_box_outlined,),
             activeIcon: Icon(Icons.add_box), // Icon when selected
             label: 'Feed'
@@ -146,7 +147,7 @@ class RegisterForm with ChangeNotifier{
   Widget alumniPage( List<UserProfile> userProfiles ) {
     return GridView.builder(
       scrollDirection: Axis.vertical,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
@@ -156,116 +157,122 @@ class RegisterForm with ChangeNotifier{
       itemCount: userProfiles.length,
       itemBuilder: (context, index) {
 
+        // final item1 = userProfiles[index];
+
         // UserProfile userProfile =userProfiles[index];
-        return Padding(
-          padding: EdgeInsets.all(5.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+        return GestureDetector(
+          onTap: (){
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context) =>
+            UserProfileDetails( passuserProfile: userProfiles[index]
+              // imageUrl: userProfiles[index].imageUrl,
+            )));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-                  Expanded(
-                    flex: 5,
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: userProfiles[index].imageUrl !=null ?
-                          NetworkImage(userProfiles[index].imageUrl!) as ImageProvider<Object>:
-                          AssetImage('assets1/studentsColor.png'),
-                        // // backgroundImage: userProfile.getImage != null
-                        // //     ? FileImage(userProfile.getImage!)as ImageProvider<Object>
-                        // //     : AssetImage('assets1/studentsColor.png'),
-                        // backgroundImage: getImage != null ? FileImage(getImage!) as ImageProvider<Object>: AssetImage('assets1/studentsColor.png'),
-                        // // backgroundImage: AssetImage('assets1/studentsColor.png'), // Use appropriate image asset
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: userProfiles[index].imageUrl !=null ?
+                            NetworkImage(userProfiles[index].imageUrl!) as ImageProvider<Object>:
+                            const AssetImage('assets1/studentsColor.png'),
 
+                        ),
                       ),
                     ),
-                  ),
 
-                  // User name and about taking 20% of container height
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Text(
-                              userProfiles[index].fullname,
-                              // fullnameController.text,
-                              style: GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    // User name and about taking 20% of container height
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: Text(
+                                userProfiles[index].fullname,
+                                // fullnameController.text,
+                                style: GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          // SizedBox(height: 0),
-                          Center(
-                            child: Text(
-                              userProfiles[index].status,
-                              // SelectedOption,
-                              style: GoogleFonts.poppins(fontSize: 10.0,color: Colors.deepPurple),
+                            // SizedBox(height: 0),
+                            Center(
+                              child: Text(
+                                userProfiles[index].status,
+                                // SelectedOption,
+                                style: GoogleFonts.poppins(fontSize: 10.0,color: Colors.deepPurple),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  // Icons row taking 10% of container height
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
+                    // Icons row taking 10% of container height
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
 
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                // Add your onTap logic here
-                              },
-                              child: Material(
-                                color: Color(0xFFFFAB40),
-                                child: InkWell(
-                                  onTap: () {
-                                    // Add your onTap logic here
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Icon(Icons.message),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Add your onTap logic here
+                                },
+                                child: Material(
+                                  color: const Color(0xFFFFAB40),
+                                  child: InkWell(
+                                    onTap: () {
+                                      // Add your onTap logic here
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      child: const ImageIcon(AssetImage('assets1/commentNot.png')),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
 
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                // Add your onTap logic here
-                              },
-                              child: Material(
-                                color: Color(0xFFFFAB40),
-                                child: InkWell(
-                                  onTap: () {
-                                    // Add your onTap logic here
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(5),
-                                    child: Icon(Icons.call),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Add your onTap logic here
+                                },
+                                child: Material(
+                                  color: const Color(0xFFFFAB40),
+                                  child: InkWell(
+                                    onTap: () {
+                                      // Add your onTap logic here
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      child: const ImageIcon(AssetImage('assets1/telephone.png')),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -276,7 +283,7 @@ class RegisterForm with ChangeNotifier{
 
 
   Widget statusWidget() {
-    return Container(
+    return SizedBox(
       height: 100,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -288,7 +295,7 @@ class RegisterForm with ChangeNotifier{
               child: Container(
                 width: 100,
                 height: 100,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.green,
                 ),
@@ -303,7 +310,7 @@ class RegisterForm with ChangeNotifier{
 
   Widget cardWidget(){
     return Card(
-      margin: EdgeInsets.all(0),
+      margin: const EdgeInsets.all(0),
       child: Stack(
         children: [
           Image.asset(
@@ -319,15 +326,15 @@ class RegisterForm with ChangeNotifier{
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.favorite_border,color: Colors.white,),
+                  icon: const Icon(Icons.favorite_border,color: Colors.white,),
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: ImageIcon(AssetImage('assets1/commentNot.png')),
+                  icon: const ImageIcon(AssetImage('assets1/commentNot.png')),
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.send,color: Colors.white,),
+                  icon: const Icon(Icons.send,color: Colors.white,),
                 ),
               ],
             ),
@@ -339,16 +346,16 @@ class RegisterForm with ChangeNotifier{
               child:Column(children: [
 
                 Row(children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 20,
                   backgroundImage: AssetImage('assets1/studentsColor.png'),),
 
-                  SizedBox(width: 20,),
+                  const SizedBox(width: 20,),
                   GestureDetector(onTap: (){},
                   child: Text("Sapna Jha",style: GoogleFonts.pacifico(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 18),),),
                 ],),
 
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
                 Text("Everyday is best Day..Keep it UP",style: GoogleFonts.pacifico(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 15))
               ],))
         ],
@@ -359,14 +366,14 @@ class RegisterForm with ChangeNotifier{
 
 
   Widget uiContainer(double height, double weight, String lottieanimation){
-    return Container(
+    return SizedBox(
       height: height,
       width: weight,
     );
   }
 
   Widget uiContainer2(double height, double weight,{IconData icon2 = Icons.account_circle}){
-    return Container(
+    return SizedBox(
       height: height,
       width: weight,
     );
@@ -380,22 +387,22 @@ class RegisterForm with ChangeNotifier{
       width: width,
       child: TextField(
         controller: controller1,
-        style: TextStyle(color: Colors.black26, fontSize: 20),
+        style: const TextStyle(color: Colors.black26, fontSize: 20),
         decoration: InputDecoration(
           hintText: hintText,
 
-          hintStyle: TextStyle(fontSize: 20, color: Colors.black26),
+          hintStyle: const TextStyle(fontSize: 20, color: Colors.black26),
           // prefixIcon: Icon(Icons.person, color: Colors.black26),
       border: OutlineInputBorder( // Default border (when not focused)
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.black,
                 width: 3.0, // Specify default thickness here
               ),
             ),
             focusedBorder: OutlineInputBorder( // Border when focused
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Color(0xFF673AB7), // Change color if desired
                 width: 2.0, // Specify focused thickness here
               ),
@@ -409,7 +416,7 @@ class RegisterForm with ChangeNotifier{
   ElevatedButton uiButton( BuildContext context, VoidCallback onPressCallback, {String buttonText= 'submit',
     double buttonHeight=50, double buttonWidth =150,TextStyle? textStyle,
     Color? buttonColor,}){
-    notifyListeners();
+    // notifyListeners();
     return ElevatedButton(
         onPressed: onPressCallback,
         style: ElevatedButton.styleFrom(

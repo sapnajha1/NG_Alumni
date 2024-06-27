@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ng_alumni/screens/userDetails/firstPage.dart';
 import 'package:ng_alumni/screens/userDetails/fivethPage.dart';
-import 'package:ng_alumni/screens/userDetails/registerPage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +22,8 @@ class _secondInformationState extends State<secondInformation> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
 
-    return Scaffold(
+    return
+      Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           mq.size.width * 0.1,
@@ -35,33 +34,33 @@ class _secondInformationState extends State<secondInformation> {
         child: Stack(
           children: [
             Align(
-              alignment: AlignmentDirectional(0.9, -0.3),
+              alignment: const AlignmentDirectional(0.9, -0.3),
               child: Container(
                 height: mq.size.width * 0.6,
                 width: mq.size.width * 0.6,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.deepPurple,
                 ),
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(-0.9, -0.3),
+              alignment: const AlignmentDirectional(-0.9, -0.3),
               child: Container(
                 height: mq.size.width * 0.6,
                 width: mq.size.width * 0.6,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color(0xFF673AB7),
                 ),
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0, -1.2),
+              alignment: const AlignmentDirectional(0, -1.2),
               child: Container(
                 height: mq.size.width * 0.6,
                 width: mq.size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xFFFFAB40),
                 ),
               ),
@@ -69,7 +68,7 @@ class _secondInformationState extends State<secondInformation> {
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
               child: Container(
-                decoration: BoxDecoration(color: Colors.transparent),
+                decoration: const BoxDecoration(color: Colors.transparent),
               ),
             ),
             Consumer<RegisterForm>(
@@ -87,7 +86,7 @@ class _secondInformationState extends State<secondInformation> {
 
                       // SizedBox(height: mq.size.height * 0.06),
 
-                      Container(
+                      SizedBox(
                         width: mq.size.width * 0.5,
                         height: mq.size.width * 0.09,
                         child: Image.asset(
@@ -116,24 +115,24 @@ class _secondInformationState extends State<secondInformation> {
                         "Are You Ready to Get Together",
                         style: GoogleFonts.oswald(
                           fontSize: mq.size.width * 0.06,
-                          color: Color(0xFFFFAB40),
+                          color: const Color(0xFFFFAB40),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       value.uiButton(
                         context,
                             () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FivethPage(),
+                              builder: (context) => const FivethPage(),
                             ),
                           );
                         },
                         buttonText: 'Click Here',
                         buttonHeight: mq.size.height * 0.2,
                         buttonWidth: mq.size.width * 0.1,
-                        buttonColor: Color(0xFF673AB7),
+                        buttonColor: const Color(0xFF673AB7),
                         textStyle: GoogleFonts.pacifico(
                           fontSize: mq.size.width * 0.06,
                           fontWeight: FontWeight.bold,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:developer' as developer;
 import 'dart:ui';
@@ -28,27 +27,14 @@ class _FivethPageState extends State<FivethPage> {
   final TextEditingController genderController = TextEditingController();
   final TextEditingController statusController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  // final TextEditingController ? passwordController  = TextEditingController();
 
 
 
 
 
 
-  //  addData(String fullname, String email) async {
-  //   if (fullname.isEmpty || email.isEmpty) {
-  //     developer.log("Enter required fields");
-  //   } else {
-  //     try {
-  //       await FirebaseFirestore.instance.collection("user_details").doc(fullname).set({
-  //         'Name': fullname,
-  //         'Email': email,
-  //       });
-  //       developer.log("Data saved");
-  //     } catch (e) {
-  //       developer.log("Failed to save data: $e");
-  //     }
-  //   }
-  // }
+
 
   // addData(String fullname, String email)async{
   //   if (fullname=="" && email==""){
@@ -61,12 +47,36 @@ class _FivethPageState extends State<FivethPage> {
   //   }
   // }
 
+  // Future<void> registerUserWithEmailAndPassword(String email, String password) async {
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //
+  //     User? user = userCredential.user;
+  //
+  //     if (user != null) {
+  //       // Store the email in the database
+  //       final DatabaseReference userProfileRef = FirebaseDatabase.instance.ref().child('users');
+  //       await userProfileRef.child(user.uid).set({
+  //         'email': email,
+  //       });
+  //
+  //       print('User UID: ${user.uid}');
+  //       print("Registration successful");
+  //     }
+  //   } catch (error) {
+  //     print("An error occurred $error");
+  //   }
+  // }
+
   void ShowAlertBox() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Pick Image from"),
+          title: const Text("Pick Image from"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -75,16 +85,16 @@ class _FivethPageState extends State<FivethPage> {
                   pickimage(ImageSource.camera);
                   Navigator.pop(context);
                 },
-                leading: Icon(Icons.camera_alt),
-                title: Text("Camera"),
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("Camera"),
               ),
               ListTile(
                 onTap: () {
                   pickimage(ImageSource.gallery);
                   Navigator.pop(context);
                 },
-                leading: Icon(Icons.image),
-                title: Text("Gallery"),
+                leading: const Icon(Icons.image),
+                title: const Text("Gallery"),
               ),
             ],
           ),
@@ -126,7 +136,7 @@ class _FivethPageState extends State<FivethPage> {
 
     if (fullname.isEmpty || email.isEmpty || gender.isEmpty || status.isEmpty ) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill in all fields')),
+        const SnackBar(content: Text('Please fill in all fields')),
       );
       return;
     }
@@ -140,12 +150,12 @@ class _FivethPageState extends State<FivethPage> {
         await ref.putFile(getImage!);
         final imageUrl = await ref.getDownloadURL();
 
-        // Save the image URL to Firestore (optional)
+        // Save the image URL and other details to Firestore
         await FirebaseFirestore.instance.collection('users').add({
           'photo_url': imageUrl,
           'Name': fullname,
           'Email': email,
-          // 'Gender' : gender,
+          'Gender' : gender,
           'Status': status,
           'Phone' : phone,
 
@@ -166,7 +176,7 @@ class _FivethPageState extends State<FivethPage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Your details are submitted successfully!')),
+          const SnackBar(content: Text('Your details are submitted successfully!')),
         );
 
       } catch (e) {
@@ -176,7 +186,7 @@ class _FivethPageState extends State<FivethPage> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select an image')),
+        const SnackBar(content: Text('Please select an image')),
       );
     }
 
@@ -187,7 +197,8 @@ class _FivethPageState extends State<FivethPage> {
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
     return Scaffold(
-      body: Stack(
+      body:
+      Stack(
         children: [
           Align(
             alignment: const AlignmentDirectional(3, -0.3),
@@ -224,7 +235,7 @@ class _FivethPageState extends State<FivethPage> {
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
             child: Container(
-              decoration: BoxDecoration(color: Colors.transparent),
+              decoration: const BoxDecoration(color: Colors.transparent),
             ),
           ),
 
@@ -255,7 +266,7 @@ class _FivethPageState extends State<FivethPage> {
                           radius: 40,
                           backgroundImage: FileImage(getImage!),
                         )
-                            : CircleAvatar(
+                            : const CircleAvatar(
                           radius: 40,
                           child: Icon(
                             Icons.person_add_alt_1,
@@ -446,7 +457,9 @@ class _FivethPageState extends State<FivethPage> {
                             context,
                                 () async {
                               await uploadImage(context);
-                              // await fullnameController;
+                              // await registerUserWithEmailAndPassword(emailController.text, passwordController!.text);
+
+                                  // await fullnameController;
                               // await statusController;
                               // await phoneController;
                               // await emailController;
@@ -457,7 +470,7 @@ class _FivethPageState extends State<FivethPage> {
                             buttonWidth: mq.size.width * 0.1,
                             buttonHeight: mq.size.height * 0.2,
                             buttonText: 'Submit Details',
-                            buttonColor: Color(0xFF673AB7),
+                            buttonColor: const Color(0xFF673AB7),
                             textStyle: GoogleFonts.pacifico(
                               fontSize: mq.size.width * 0.05,
                               fontWeight: FontWeight.bold,
@@ -478,14 +491,14 @@ class _FivethPageState extends State<FivethPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WelcomeAgain(),
+                            builder: (context) => const WelcomeAgain(),
                           ),
                         );
                   },
                         buttonWidth: mq.size.width * 0.1,
                         buttonHeight: mq.size.height * 0.2,
                         buttonText: 'Finish',
-                        buttonColor: Color(0xFF673AB7),
+                        buttonColor: const Color(0xFF673AB7),
                         textStyle: GoogleFonts.pacifico(
                           fontSize: mq.size.width * 0.05,
                           fontWeight: FontWeight.bold,

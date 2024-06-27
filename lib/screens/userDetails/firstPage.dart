@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:ng_alumni/screens/userDetails/registerPage.dart';
-import 'package:ng_alumni/screens/userDetails/secondPage.dart';
 import 'package:ng_alumni/user_form/register.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +86,7 @@ class _FirstPageState extends State<FirstPage> {
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
                     child: Container(
-                      decoration:  BoxDecoration(color: Colors.transparent),
+                      decoration:  const BoxDecoration(color: Colors.transparent),
                     ),
                   ),
 
@@ -115,14 +113,14 @@ class _FirstPageState extends State<FirstPage> {
 
                                         Center(child: Lottie.asset('assets1/purpleBird2.json',
                                             // height: 130, width: 130
-                                          height: mq.size.height * 0.15,
-                                          width: mq.size.height * 0.15,
+                                          height: mq.size.height * 0.14,
+                                          width: mq.size.height * 0.14,
                                         )),
                                         // SizedBox(height: 50,),
 
                                         SizedBox(height: mq.size.height * 0.06),
 
-                                        Text("what is your full name",style: GoogleFonts.pacifico( fontSize: mq.size.width * 0.05,color: Color(0xFF673AB7)),),
+                                        Text("what is your full name",style: GoogleFonts.pacifico( fontSize: mq.size.width * 0.05,color: const Color(0xFF673AB7)),),
 
                                         // SizedBox(height: 15,),
 
@@ -158,12 +156,12 @@ class _FirstPageState extends State<FirstPage> {
 
                                         Center(
 
-                                          child:Container(
+                                          child:SizedBox(
                                             // width:210,
                                             width: mq.size.width * 0.5,
                                             // color: Color(0xFFF016A70),
                                             child: ElevatedButton(onPressed: (){},
-                                                style:ElevatedButton.styleFrom(backgroundColor:Color(0xFFD6B4FC) ) ,
+                                                style:ElevatedButton.styleFrom(backgroundColor:const Color(0xFFD6B4FC) ) ,
                                                 child:
                                                 Row(
                                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +172,7 @@ class _FirstPageState extends State<FirstPage> {
                                                         width: mq.size.height * 0.04,
                                                       ),
 
-                                                      SizedBox(width:0),
+                                                      const SizedBox(width:0),
                                                       Text("Login with Google",style: GoogleFonts.poppins( fontSize: mq.size.width * 0.030,color: Colors.white60),)
                                                     ])
                                             ),

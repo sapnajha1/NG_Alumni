@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,7 +9,7 @@ import '../authentication/userDetailsListModel.dart';
 import '../user_form/register.dart';
 
 class AlumniPage extends StatefulWidget {
-  AlumniPage({super.key});
+  const AlumniPage({super.key});
 
   // final String fullnameController;
   // final String UserAboutController;
@@ -51,11 +50,20 @@ class _AlumniPageState extends State<AlumniPage> {
   //   }
   // }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Provider.of<RegisterForm>(context, listen: false).fetchUserProfiles();
+  // }
+
   @override
   void initState() {
     super.initState();
-    Provider.of<RegisterForm>(context, listen: false).fetchUserProfiles();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<RegisterForm>(context, listen: false).fetchUserProfiles();
+    });
   }
+
 
 
   @override
@@ -63,7 +71,7 @@ class _AlumniPageState extends State<AlumniPage> {
     return Scaffold(
 
       appBar: AppBar(automaticallyImplyLeading: false,
-        title: Center(child: Text('Alumni',style: GoogleFonts.pacifico(color: Color(0xFF673AB7),fontSize: 30),)),
+        title: Center(child: Text('Alumni',style: GoogleFonts.pacifico(color: const Color(0xFF673AB7),fontSize: 30),)),
       ),
 
        body:
@@ -108,7 +116,7 @@ class _AlumniPageState extends State<AlumniPage> {
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
             child: Container(
-              decoration:  BoxDecoration(color: Colors.transparent),
+              decoration:  const BoxDecoration(color: Colors.transparent),
             ),
           ),
 
